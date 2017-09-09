@@ -3,10 +3,12 @@ title: 'Neuropathic pain: So many people, but where are the drugs?'
 output: 
   flexdashboard::flex_dashboard:
     storyboard: true
+    navbar:
+      - { title: 'painblogR.org', icon: 'fa-home', href: 'https://www.painblogr.org/', align: right }
     social: ['twitter', 'facebook', 'linkedin', 'google-plus']
     source_code: 'https://github.com/kamermanpr/WHO-EML-storyboard-2016'
+    favicon: 'favicon.ico'
     self_contained: false
-    lib_dir: 'https://dl.dropboxusercontent.com/u/11805474/painblogr/html-head'
 ---
 
 ```{r setup, include = FALSE, warning = FALSE, message = FALSE}
@@ -28,7 +30,70 @@ knitr::opts_chunk$set(cache = FALSE,
 
 ```
 
-### **Neuropathic pain** is estimated to affect **7 to 10%** of adults globally [$^1$](http://www.ncbi.nlm.nih.gov/pubmed/24291734). This translates into about **518 to 740 million** affected individuals. {data-commentary-width=400}
+### **1. Introduction:** Neuropathic pain is a debilitating form of chronic pain. Learn more about it in this storyboard.<br><span style="font-size:80%;font-style:italic;">(navigate through the storyboard by clicking on the panels in this top row)</span>. {data-commentary-width=400}
+
+```{r introduction}
+# Load data
+load('./data/introduction_plot.RData')
+
+# Plot
+highchart() %>%
+    hc_add_series_treemap(introduction_tree,
+                          borderColor = '#FFFFFF',
+                          borderWidth = 2,
+                          dataLabels = 
+                              list(style = list(fontSize = '15px')),
+                          states = 
+                              list(hover = 
+                                       list(borderColor = '#000000'))) %>%
+    hc_title(text = "What does neuropathic pain feel like?") %>% 
+    hc_tooltip(backgroundColor = '#333333', 
+               borderRadius = 10,
+               borderColor = '#999999',
+               pointFormat = "<b>Patients reporting {point.name}:</b> {point.value}%",
+               shadow = FALSE,
+               style = list(color = '#FFFFFF',
+                            fontSize = '13px'))
+```
+
+****
+
+Imagine having a pain that has been described as being _'Worse than death'_. A pain that may feel like your _'skin is on fire'_, and at the same time the painful area may be _'numb'_. In some cases even the lightest of touches, such as your clothes on your skin, may be excruciatingly painful. **This is what it can feel like to have neuropathic pain**. 
+
+This storyboard will introduce you to this unusual type of chronic pain and its treatment. 
+
+<p style="font-size:80%;"><b>Navigation:</b> Every section of the storyboard consists of an interactive plot on the left <em>(try it out by hovering your mouse arrow over the adjacent plot)</em>, and a text panel on the right. The text panel expands on the question stated in the numbered navigation panel above, and provides a legend for the figure. The figure provides illustrative data that complements the text.</p>
+
+****
+
+##### **Interactive plot:** What does neuropathic pain feel like?.
+
+The plot shows the relative frequency of terms used by 89 individuals with various causes of nervous system injury (e.g., traumatic nerve injury, post-herpetic neuralgia, polyneuropathies, stroke pain; block size is proportional to frequency). _'Burning'_ was the most commonly used term, but most patients use several terms to describe their pain<a href="http://www.ncbi.nlm.nih.gov/pubmed/15733628" target="_blank"><sup>1</sup></a>.
+
+<!--
+****
+
+<div style="font-size:80%;font-style:italic;">
+Each page of the storyboard consists of three parts: 
+<ol type="1">
+<li>The upper navigation panel <span style="color:#FFFFFF;background:#68A4E5;border-radius:2px;padding-left:2px;padding-right:3px;">(the active panel is highlighted in blue)</span>.</li>
+<li>Two lower panels:
+<ol type="i">
+<li>The left panel includes an interactive plot (test it out by hovering your cursor over the coloured blocks in plot to the left).</li>
+<li>The right panel (this panel) includes additional commentary on the topic introduced in the navigation panel (top half), and additional information on the interactive plot (lower half).</li>
+</ol>
+</li>
+</ol>
+</div>
+
+-->
+
+<p style="float:right;font-size:80%;">Created by: 
+    <a href="https://www.painblogr.org" target="_blank">painblogR</a> 
+    <img src="./images/ccby.png" height=18px></a>
+</p>
+
+### **2. How common is neuropathic pain?** Neuropathic pain is estimated to affect 7 to 10% of adults globally; that's between 518 to 740 million people<a href="http://www.ncbi.nlm.nih.gov/pubmed/24291734" target="_blank"><sup>2</sup></a>. {data-commentary-width=400}
 
 ```{r prevalence}
 # Load data
@@ -134,14 +199,14 @@ prevalence_plot <- ggplot(data = plot_data[-7, ]) + # Omit 'All combined' data
     # Customize theme options
     theme(panel.background = element_blank(),
           panel.grid.major = element_line(color = '#999999', size = 0.2),
-          legend.text = element_text(size = 12),
-          legend.title = element_text(size = 14),
-          plot.title = element_text(size = 16),
+          legend.text = element_text(size = 12, family = 'Arial'),
+          legend.title = element_text(size = 14, family = 'Arial'),
+          plot.title = element_text(size = 16, family = 'Arial'),
           axis.ticks = element_line(color = '#999999', size = 0.2),
           axis.title.x = element_blank(),
-          axis.title.y = element_text(size = 16),
-          axis.text.y = element_text(size = 14),
-          axis.text.x = element_text(size = 14))
+          axis.title.y = element_text(size = 16, family = 'Arial'),
+          axis.text.y = element_text(size = 14, family = 'Arial'),
+          axis.text.x = element_text(size = 14, family = 'Arial'))
 
 # Make ggplot interactive with ggiraph htmlwidget
 ggiraph(code = {print(prevalence_plot)}, 
@@ -156,28 +221,26 @@ rm(list = ls())
 
 ****
 
-Neuropathic pain is caused by damage to the sensory pathways and structures of the nervous system. This damage may occur as a result of physical trauma to the nervous system _(e.g., motor vehicle accidents, war-related trauma to combatants and non-combatants, surgery)_, or as a secondary consequence of other medical conditions _(e.g., diabetes mellitus, HIV, malnutrition, stroke, tumours)_ and their treatments _(e.g., cancer chemotherapy)_. 
-
-Clinical features of the pain often include symptoms such as pins-and-needles, burning or shooting pain, and altered sensation _(e.g., numbness, and pain in response to light touch)_.
+Neuropathic pain is caused by damage to the sensory pathways and structures of the nervous system. This damage may occur as a result of physical trauma _(e.g., motor vehicle accidents, war-related trauma to combatants and non-combatants, surgery)_, or as a secondary consequence of other medical conditions _(e.g., diabetes mellitus, HIV, malnutrition, stroke, tumours)_ and their treatments _(e.g., cancer chemotherapy)_. 
 
 ****
 
-##### Plot: Prevalence of neuropathic pain in the general population
+##### **Interactive plot:** Prevalence of neuropathic pain in the general population
 
-The _center horizontal lines_ show the reported prevalence of neuropathic pain. The _boxes_ show the bootstrap 95% confidence interval of the prevalence (10,000 resamples), and the _whiskers_ show the maximum and minimum values obtained from the resampling. The _dashed line_ shows the bootstrap mean across all six studies (n = 38,422), and _line & fill colour_ quantifies the sample size. 
+The _centre horizontal lines_ show the reported prevalence of neuropathic pain. The _boxes_ show the bootstrap 95% confidence interval of the prevalence (10,000 resamples), and the _whiskers_ show the maximum and minimum values obtained from the resampling. The _dashed line_ shows the bootstrap mean across all six studies (n = 38,422), and _line & fill colour_ quantifies the sample size. 
 
-_(Click the flag to access the related PubMed entry)_  
+<span style="font-style:italic;font-size:80%;">(Click the flag to access the related PubMed entry)</span>  
 
-<a href="http://www.ncbi.nlm.nih.gov/pubmed/16618472" target="_blank"><img src="./figures/uk.png" width=48px style="padding-left:15px;" title="UK: Torrance et al., 2004"></a>
-<a href="http://www.ncbi.nlm.nih.gov/pubmed/17888574" target="_blank"><img src="./figures/france.png" width=48px style="padding-left:15px;" title="France: Bouhassira et al., 2008"></a>
-<a href="http://www.ncbi.nlm.nih.gov/pubmed/19594844" target="_blank"><img src="./figures/canada.png" width=48px style="padding-left:15px;" title="Canada: Toth et al., 2009"></a>
-<a href="http://www.ncbi.nlm.nih.gov/pubmed/20849570" target="_blank"><img src="./figures/usa.png" width=48px style="padding-left:15px;" title="USA: Yawn et al., 2009"></a>
-<a href="http://www.ncbi.nlm.nih.gov/pubmed/22871508" target="_blank"><img src="./figures/brazil.png" width=48px style="padding-left:15px;" title="Brazil: de Moraes Vieira et al., 2012"></a>
-<a href="http://www.ncbi.nlm.nih.gov/pubmed/23241023" target="_blank"><img src="./figures/morocco.png" width=48px style="padding-left:15px;" title="Morocco: Harifi et al., 2013"></a>
+<a href="http://www.ncbi.nlm.nih.gov/pubmed/16618472" target="_blank"><img src="./images/uk.png" width=45px style="padding-left:16px;" title="UK: Torrance et al., 2004"></a>
+<a href="./images/france.png" width=45px style="padding-left:16px;" title="France: Bouhassira et al., 2008"></a>
+<a href="http://www.ncbi.nlm.nih.gov/pubmed/19594844" target="_blank"><img src="./images/canada.png" width=45px style="padding-left:16px;" title="Canada: Toth et al., 2009"></a>
+<a href="http://www.ncbi.nlm.nih.gov/pubmed/20849570" target="_blank"><img src="./images/usa.png" width=45px style="padding-left:16px;" title="USA: Yawn et al., 2009"></a>
+<a href="http://www.ncbi.nlm.nih.gov/pubmed/22871508" target="_blank"><img src="./images/brazil.png" width=45px style="padding-left:16px;" title="Brazil: de Moraes Vieira et al., 2012"></a>
+<a href="http://www.ncbi.nlm.nih.gov/pubmed/23241023" target="_blank"><img src="./images/morocco.png" width=45px style="padding-left:16px;" title="Morocco: Harifi et al., 2013"></a>
 
 <p style="float:right;font-size:80%;">Created by: 
-    <a href="http://painblogr.org" target="_blank">painblogR</a> 
-    <img src="./figures/ccby.png" height=18px></a>
+    <a href="https://www.painblogr.org" target="_blank">painblogR</a> 
+    <img src="./images/ccby.png" height=18px></a>
 </p>
 
 
@@ -224,12 +287,12 @@ conditions_plot <- ggplot(plot_data) +
     theme(panel.background = element_blank(),
           panel.grid.major = element_line(color = '#999999', size = 0.2),
           legend.position = 'none',
-          plot.title = element_text(size = 16),
+          plot.title = element_text(size = 16, family = 'Arial'),
           axis.ticks = element_line(color = '#999999', size = 0.2),
-          axis.title.x = element_text(size = 16),
+          axis.title.x = element_text(size = 16, family = 'Arial'),
           axis.title.y = element_blank(),
-          axis.text.y = element_text(size = 14),
-          axis.text.x = element_text(size = 14))
+          axis.text.y = element_text(size = 14, family = 'Arial'),
+          axis.text.x = element_text(size = 14, family = 'Arial'))
 
 # Make ggplot interactive with ggiraph htmlwidget
 ggiraph(code = {print(conditions_plot)}, 
@@ -250,21 +313,21 @@ However, some causes of damage to the somatosensory nervous system are associate
 
 ****
 
-##### Plot: Prevalence of neuropathic pain across several common causes of nervous system injury
+##### **Interactive plot:** Prevalence of neuropathic pain across several common causes of nervous system injury
 
 The _horizontal bars_ show the range of prevalence values reported for various causes of central and peripheral nervous system injury [$^REF$](http://www.ncbi.nlm.nih.gov/pubmed/18211592). Note the differences in prevalence of neuropathic pain across the seven conditions, and the variation in prevalence reported within each condition. 
 
 <p style="font-size:80%;"><b>*</b> Values for HIV polyneuropathy and diabetic polyneuropathy report the percentage of individuals with HIV infection or diabetes mellitus as such, and not the subset of indivduals with those diasease that develop a neuropathy. <b>**</b> Values for post-herpetic neuralgia report the percentage of individuals with <em>Herpes zoster (shingles)</em> that go on to develop post-herpetic neuralgia.</p>  
 
 <p style="float:right;font-size:80%;">Created by: 
-    <a href="http://painblogr.org" target="_blank">painblogR</a> 
-    <img src="./figures/ccby.png" height=18px></a>
+    <a href="https://www.painblogr.org" target="_blank">painblogR</a> 
+    <img src="./images/ccby.png" height=18px></a>
 </p>
 
 -->
 
 
-### The burden of neuropathic pain is likely to increase in the future, with **developing countries possibly being worst affected**. {data-commentary-width=400}
+### **3. Are we winning the war on neuropathic pain?** No. The burden of neuropathic pain is likely to increase in the future, with developing countries being worst affected. {data-commentary-width=400}
 
 ```{r burden}
 # Load data
@@ -353,17 +416,17 @@ burden_plot <- ggplot(data = data_burden) +
          x = '\nYear') +
     # Customize theme
     theme(legend.title = element_blank(),
-          legend.text = element_text(size = 12),
+          legend.text = element_text(size = 12, family = 'Arial'),
           legend.key = element_rect(fill = '#FFFFFF'),
           legend.key.height = unit(20, 'mm'),
           panel.background = element_blank(),
           panel.grid.major = element_line(color = '#999999', 
                                           size = 0.2),
-          plot.title = element_text(size = 16),
+          plot.title = element_text(size = 16, family = 'Arial'),
           axis.ticks = element_line(color = '#999999', 
                                     size = 0.2),
-          axis.title = element_text(size = 16),
-          axis.text = element_text(size = 14))
+          axis.title = element_text(size = 16, family = 'Arial'),
+          axis.text = element_text(size = 14, family = 'Arial'))
 
 # Make ggplot interactive with ggiraph htmlwidget
 ggiraph(code = {print(burden_plot)}, 
@@ -379,24 +442,24 @@ rm(list = ls())
 
 ****
 
-Two persistent global trends are an aging population [$^2$](http://www.un.org/en/development/desa/population/publications/pdf/ageing/WPA2015_Report.pdf) and the rising prevalence of diabetes mellitus [$^3$](http://ncbi.nlm.nih.gov/pubmed/24630390). Both of these factors are major risk factors for neuropathic pain, and mean that neuropathic pain is likely to increase in prevalence and importance in the future.  
+Two persistent global trends are an aging population<a href="http://www.un.org/en/development/desa/population/publications/pdf/ageing/WPA2015_Report.pdf" target="_blank"><sup>3</sup></a> and the rising prevalence of diabetes mellitus<a href="http://ncbi.nlm.nih.gov/pubmed/24630390" target="_blank"><sup>4</sup></a>. Both these factors are major risks for neuropathic pain, and mean that neuropathic pain is likely to increase in prevalence and importance in the future.  
 
-Developing countries have the highest rates of increase in population aging and cases of diabetes mellitus. Moreover, these countries face a greater burden of disease from other common causes of neuropathic pain such as trauma, HIV/AIDS, and leprosy than do developed countries [$^4$](http://www.healthdata.org/gbd/data). Thus, more poorly resourced nations are likely to increasingly shoulder a disproportionate share of the global burden of neuropathic pain as the century progresses.  
+Developing countries have the highest rates of increase in population aging and cases of diabetes mellitus. Moreover, these countries face a greater burden of disease from other common causes of neuropathic pain such as trauma, HIV/AIDS, and leprosy than do developed countries<a href="http://www.healthdata.org/gbd/data0" target="_blank"><sup>5</sup></a>. Thus, more poorly resourced nations are likely to increasingly shoulder a disproportionate share of the global burden of neuropathic pain.  
 
 ****
 
-##### Plot: Estimated and projected global burden of diabetes mellitus and painful diabetic polyneuropathy
+##### **Interactive plot:** Estimated and projected global burden of diabetes mellitus and painful diabetic polyneuropathy
 
-Estimated number of cases of diabetes mellitus _(blue)_ and painful diabetic polyneuropathy (DPN) _(orange)_ between 1985 and 2013. Projected number of cases for the period up to 2035 are highlighted in the _gray_ block [$^5$](http://ncbi.nlm.nih.gov/pubmed/24630390). The number of DPN cases are based on conservative estimates of between 10 and 20% of individuals with diabetes mellitus developing a painful neuropathy [$^6$](http://ncbi.nlm.nih.gov/pubmed/18828198).
+Estimated number of cases of diabetes mellitus _(blue)_ and painful diabetic polyneuropathy (DPN) _(orange)_ between 1985 and 2013. Projected number of cases up to 2035 are highlighted in the _grey_ block<a href="http://ncbi.nlm.nih.gov/pubmed/24630390" target="_blank"><sup>6</sup></a>. The number of DPN cases is based on estimates of between 10 and 20% of diabetics developing a painful neuropathy<a href="http://ncbi.nlm.nih.gov/pubmed/18828198" target="_blank"><sup>7</sup></a>.
 
 <p style="margin-bottom:2%;float:right;font-size:80%;">Created by: 
-    <a href="http://painblogr.org" target="_blank">painblogR</a> 
-    <img src="./figures/ccby.png" height=18px></a>
+    <a href="https://www.painblogr.org" target="_blank">painblogR</a> 
+    <img src="./images/ccby.png" height=18px></a>
 </p>
 
 
 
-### Neuropathic pain has a **significant adverse impact on life, health and function**; even more so than other causes of chronic pain [$^7$](http://www.ncbi.nlm.nih.gov/pubmed/17237663). {data-commentary-width=400}
+### **4. Why does neuropathic pain matter?** Neuropathic pain has a significant adverse impact on life, health and function; even more so than other causes of chronic pain<a href="http://www.ncbi.nlm.nih.gov/pubmed/17237663" target="_blank"><sup>8</sup></a>. {data-commentary-width=400}
 
 ```{r impact}
 
@@ -413,12 +476,12 @@ highchart() %>%
                valueDecimals = 1, 
                style = list(color = '#FFFFFF')) %>%
     hc_title(useHTML = TRUE,
-             text = '<span style="font-size:20;color:#000000">Health-related quality of life in people with and without chronic pain</span><br><span style="font-size:65%;font-style:italic;">(Short Form (SF)-36 Health Survey; 0  = worst possible health state, 100 = best possible health state)</span>') %>%
+             text = '<span style="font-family:Arial;font-size:18;color:#000000">Health-related quality of life in people with and without chronic pain</span><br><span style="font-family:Arial;font-size:65%;font-style:italic;">(Short Form (SF)-36 Health Survey; 0  = worst possible health state, 100 = best possible health state)</span>') %>%
     hc_xAxis(categories = c('Physical functioning', 'Role limitations (physical)',
                             'Bodily pain', 'General health',
                             'Vitality', 'Social functioning',
                             'Role limitations (emotional)', 'Mental health'),
-             labels = list(style = list(fontSize = 16,
+             labels = list(style = list(fontSize = 14,
                                         color = '#4d4d4d')),
              tickmarkPlacement = 'on',
              lineWidth = 0) %>%
@@ -428,7 +491,7 @@ highchart() %>%
              tickInterval = 20) %>%
     hc_legend(itemStyle = list(fontWeight = 'normal',
                                color = '#000000',
-                               fontSize = 15),
+                               fontSize = 14),
               align = 'right',
               verticalAlign = 'middle',
               layout = 'vertical') %>%
@@ -474,22 +537,22 @@ highchart() %>%
 
 ****
 
-Neuropathic pain has a significant adverse impact on all measured aspects of life, health and function. This impact is greater than the impact of chronic, non-neuropathic pain, even when adjusting for pain intensity [$^7$](http://www.ncbi.nlm.nih.gov/pubmed/17237663). In one study, 17% of people reporting neuropathic pain rated their quality of life as _‘worse than death’_, according to the validated EQ5D health-related quality of life measure [$^8$](http://www.ncbi.nlm.nih.gov/pubmed/25020004). The average quality of life scores in the presence of neuropathic pain are comparable to those in severe depression, in poorly-controlled diabetes mellitus, and after recent myocardial infarction [$^7$](http://www.ncbi.nlm.nih.gov/pubmed/17237663).
+Neuropathic pain has a significant adverse impact on all measured aspects of life, health and function. This impact is greater than the impact of chronic, non-neuropathic pain, even when adjusting for pain intensity<a href="http://www.ncbi.nlm.nih.gov/pubmed/17237663" target="_blank"><sup>8</sup></a>. In one study, 17% of people reporting neuropathic pain rated their quality of life as _‘worse than death’_, according to the validated EQ5D health-related quality of life measure<a href="http://www.ncbi.nlm.nih.gov/pubmed/25020004" target="_blank"><sup>9</sup></a>. The average quality of life scores in the presence of neuropathic pain are comparable to those with severe depression, with poorly-controlled diabetes mellitus, and after recent myocardial infarction<a href="http://www.ncbi.nlm.nih.gov/pubmed/17237663" target="_blank"><sup>8</sup></a>.
 
 ****
 
-##### Plot: Health-related quality of life in people with and without chronic pain
+##### **Interactive plot:** Health-related quality of life in people with and without chronic pain
 
-Ratings of health-related quality of life from a population survey in Scotland [$^7$](http://www.ncbi.nlm.nih.gov/pubmed/17237663). Ratings are shown for people without chronic pain _(green, n = 1,537)_, with chronic non-neuropathic pain _(blue, n = 1,179)_, and chronic neuropathic pain _(orange, n = 241)_. Across all eight domains, having neuropathic pain was associated with significantly poorer quality of life compared to having no chronic pain or having chronic non-neuropathic pain.
+Ratings of health-related quality of life from a population survey in Scotland<a href="http://www.ncbi.nlm.nih.gov/pubmed/17237663" target="_blank"><sup>8</sup></a>. Ratings are shown for people without chronic pain _(green, n = 1,537)_, with chronic non-neuropathic pain _(blue, n = 1,179)_, and chronic neuropathic pain _(orange, n = 241)_. Across all eight domains, having neuropathic pain was associated with significantly poorer quality of life compared to having no chronic pain or having chronic non-neuropathic pain.
 
 <p style="margin-bottom:2%;float:right;font-size:80%;">Created by: 
-    <a href="http://painblogr.org" target="_blank">painblogR</a> 
-    <img src="./figures/ccby.png" height=18px></a>
+    <a href="https://www.painblogr.org" target="_blank">painblogR</a> 
+    <img src="./images/ccby.png" height=18px></a>
 </p>
 
 
 
-### Neuropathic pain can be **difficult to treat**. It responds poorly to treatment with conventional analgesics, but there are specific classes of drugs with proven efficacy in managing the pain [$^9$](http://www.ncbi.nlm.nih.gov/pubmed/25575710). {data-commentary-width=450}
+### **5. Do we have effective medicines?** Neuropathic pain can be difficult to treat, but there are specific classes of drugs with proven efficacy in managing the pain<a href="http://www.ncbi.nlm.nih.gov/pubmed/25575710" target="_blank"><sup>10</sup></a>. {data-commentary-width=450}
 
 ```{r treatment}
 # Load data
@@ -557,15 +620,15 @@ nnt_plot <- ggplot(data = nnt_data) +
     theme(panel.background = element_blank(),
           panel.grid.major = element_line(color = '#999999',
                                           size = 0.2),
-          legend.text = element_text(size = 12),
-          legend.title = element_text(size = 14),
-          plot.title = element_text(size = 16),
+          legend.text = element_text(size = 12, family = 'Arial'),
+          legend.title = element_text(size = 14, family = 'Arial'),
+          plot.title = element_text(size = 16, family = 'Arial'),
           axis.ticks = element_line(color = '#999999', 
                                     size = 0.2),
           axis.title.y = element_blank(),
-          axis.title.x = element_text(size = 16),
-          axis.text.y = element_text(size = 14),
-          axis.text.x = element_text(size = 14))
+          axis.title.x = element_text(size = 16, family = 'Arial'),
+          axis.text.y = element_text(size = 14, family = 'Arial'),
+          axis.text.x = element_text(size = 14, family = 'Arial'))
 
 # Make ggplot interactive with ggiraph htmlwidget
 ggiraph(code = print(nnt_plot),
@@ -581,7 +644,7 @@ rm(list = ls())
 
 ****
 
-A recent [GRADE](http://www.gradeworkinggroup.org) assessment of pharmacological treatments for neuropathic pain recommended [$^9$](http://www.ncbi.nlm.nih.gov/pubmed/25575710):
+A recent [GRADE](http://www.gradeworkinggroup.org) assessment of pharmacological treatments for neuropathic pain recommended<a href="http://www.ncbi.nlm.nih.gov/pubmed/25575710" target="_blank"><sup>10</sup></a>:
 
 - FIRST LINE: Tricyclic antidepressants _(e.g., amitriptyline)_, serotonin and noradrenaline reuptake inhibitors _(duloxetine, venlafaxine)_, and $\alpha2\delta$-calcium channel ligands _(gabapentin, pregabalin)_. 
 
@@ -593,7 +656,7 @@ A recent [GRADE](http://www.gradeworkinggroup.org) assessment of pharmacological
 
 ****
 
-##### Plot: Recommended first-line treatments for neuropathic pain
+##### **Interactive plot:** Recommended first-line treatments for neuropathic pain
 
 Point estimates and 95% confidence intervals of the number needed to treat (NNT) for first-line therapies for neuropathic pain. The _shading colour_ quantifies the total number of people included in randomized control trials involving each drug/drug class.   
 
@@ -602,13 +665,13 @@ Point estimates and 95% confidence intervals of the number needed to treat (NNT)
 
 
 <p style="margin-bottom:2%;float:right;font-size:80%;">Created by: 
-    <a href="http://painblogr.org" target="_blank">painblogR</a> 
-    <img src="./figures/ccby.png" height=18px></a>
+    <a href="https://www.painblogr.org" target="_blank">painblogR</a> 
+    <img src="./images/ccby.png" height=18px></a>
 </p>
 
 
 
-### **National essential medicines lists** of developing countries typically do not provide good coverage of the recommended pharmacological treatments [$^{10}$](http://www.ncbi.nlm.nih.gov/pubmed/25894010). {data-commentary-width=400}
+### **6. Are these medicines widely available?** No, national essential medicines lists of developing countries typically do not provide good coverage of the recommended medicines<a href="http://www.ncbi.nlm.nih.gov/pubmed/25894010" target="_blank"><sup>11</sup></a>. {data-commentary-width=400}
 
 ```{r access}
 # Load data
@@ -617,7 +680,11 @@ load('./data/access_plot.RData')
 # Plot
 leaflet(data = geo_data) %>%
     setView(lat = 10, lng = 0, zoom = 2) %>%
-    addProviderTiles('CartoDB.PositronNoLabels') %>%
+     # Add other countries
+    addPolygons(data = geo_other, weight = 1, color = '#777777',
+                opacity = 1, fillColor = '#777777',
+                fillOpacity = 1, popup = popup_NA) %>%
+    # Add analysed countries
     addPolygons(weight = 1, color = '#000000',
                 opacity = 1, fillColor = ~ pal_first(factor_first),
                 fillOpacity = 1, popup = popup_first,
@@ -659,31 +726,32 @@ rm(list = ls())
 
 ****
 
-The [WHO](http://apps.who.int/gb/ebwha/pdf_files/WHA67/A67_31-en.pdf) has urged its members to ensure, _\"the availability of essential medicines for the management of symptoms, including pain\"_. But, a recent audit of 112 national essential medicines lists (NEML) identified that ~66% of countries had only one class of first-line agent (typically tricyclic antidepressants), and ~50% had only one second-line agent (typically tramadol, a weak opioid), included on their NEMLs [$^{10}$](http://www.ncbi.nlm.nih.gov/pubmed/25894010). 
+The [WHO](http://apps.who.int/gb/ebwha/pdf_files/WHA67/A67_31-en.pdf) has urged its members to ensure, _\"the availability of essential medicines for the management of symptoms, including pain\"_. But, a recent audit of 112 national essential medicines lists (NEML) identified that ~66% of countries had only one class of first-line agent (typically tricyclic antidepressants), and ~50% had only one second-line agent (typically tramadol, a weak opioid), included on their NEMLs<a href="http://www.ncbi.nlm.nih.gov/pubmed/25894010" target="_blank"><sup>11</sup></a>. 
+
 This means that should a patient fail to respond to initial therapy, have significant side effects, or have contraindications to a drug’s use, there are no or limited alternative agents available to switch to, or add-on to the initial agent. 
 
 ****
 
-##### Plot: NEML-listed drug classes recommended as 1st, 2nd, or 3rd-line therapy for treating neuropathic pain.
+##### **Interactive plot:** NEML-listings of recommended drug classes.
 
-Colour intensity indicates number of drug classes listed on a countries NEML. Choose the recommendation level you want to assess in the top-right corner of the plot. Click on a country of interest to view detailed information. 
+For each level of recommendation, the colour intensity quantifies the number of drug classes listed on a countries NEML _(click on a country to view detailed information)_. Only low- and middle-income countries with publically available data are highlighted, all other countries are shaded _grey_.
 
 <p style="font-size:80%;"><span style="font-size:100%">&dagger;</span>: _TCA_ = tricyclic antidepressants (typically amitriptyline); _&alpha;2&delta;-ligand_ = &alpha;2&delta;-calcium channel ligands (gabapentin and pregabalin); _SNRI_ = serotonin and noradrenaline reuptake inhibitors (duloxetine and venlafaxine). <span style="font-size:100%">&Dagger;</span>: _Weak opioid_ = tramadol; _Topical agent_ = 5% lidocaine cream/patch, 8% capsaicin patch (not listed on any NEMLs). <span style="font-size:100%">&#8277;</span>: _Strong opioid_ = morphine or oxycodone; _Other agent_ = Botulinium toxin A (not listed on any NEMLs)</p>
 
 <p style="margin-bottom:2%;float:right;font-size:80%;">Created by: 
-    <a href="http://painblogr.org" target="_blank">painblogR</a> 
-    <img src="./figures/ccby.png" height=18px></a>
+    <a href="https://www.painblogr.org" target="_blank">painblogR</a> 
+    <img src="./images/ccby.png" height=18px></a>
 </p>
 
 
 
-### Steps to **improve access** to effective pharmacological treatments for neuropathic pain. {data-commentary-width=400}
+### **7. What can be done to increase treatment availability?** One option is to increase access by getting more classes of effective medications included on the WHO Model List of Essential Medicines. {data-commentary-width=400}
 
-<a href="https://dl.dropboxusercontent.com/u/11805474/essential-medicines/draft-eml-application.pdf" target="_blank"><img src="./figures/eml.png" width=100%></a>
+<a href="https://dl.dropboxusercontent.com/u/11805474/painblogr/neuropathic-pain-storyboard-2016/eml-application.pdf" target="_blank"><img src="./images/eml.png" width=100%></a>
 
 ****
 
-The WHO policies and publications on essential medicines inform developing countries national essential medicines lists [$^{11}$](http://www.ncbi.nlm.nih.gov/pubmed/12767751) and are associated with improved quality use of medicines [$^{12}$](http://www.ncbi.nlm.nih.gov/pubmed/25226527). Thus, getting first-line medicines for the treatment of neuropathic pain included on the WHO Model List of Essential Medicines provides an indirect method to increase global access to effective treatments, and to increase awareness of neuropathic pain as a public health issue. 
+The WHO policies and publications on essential medicines inform developing countries national essential medicines lists<a href="http://www.ncbi.nlm.nih.gov/pubmed/12767751" target="_blank"><sup>12</sup></a> and are associated with improved quality use of medicines<a href="http://www.ncbi.nlm.nih.gov/pubmed/25226527" target="_blank"><sup>13</sup></a>. Thus, getting first-line medicines for the treatment of neuropathic pain included on the WHO Model List of Essential Medicines provides an indirect method to increase global access to effective treatments, and to increase awareness of neuropathic pain as a public health issue. 
 
 The International Association for the Study of Pain ([IASP](http://www.iasp-pain.org/)), working together with its Special Interest Group on Neuropathic Pain (NeuPSIG) and the International Association for Hospice and Palliative Care ([IAHPC](http://hospicecare.com/home/)), are therefore **applying to have the first-line medication, _gabapentin_ included on the WHO Model List of Essential Medicines**. 
 
@@ -691,12 +759,12 @@ The International Association for the Study of Pain ([IASP](http://www.iasp-pain
 
 ##### Draft copy of the application
 
-Click on the image on the left to download a draft copy of the application. You can also access all the files used to generate the application, including the figures, from this [GitHub](http://painblogr.org/WHO-EML-application-2016/) repository.
+Click on the image on the left to download a draft copy of the application. You can also access all the files used to generate the application, including the figures, from this [GitHub](http://kamermanpr.github.io/WHO-EML-application-2016/) repository.
 
 <p>
 <span style="margin-bottom:2%;font-size:80%;float:left;max-width:48%">The source code for this storyboard can be accessed by clicking _'source code'_ on the right side of the navigation bar.</span>
 
 <span style="margin-bottom:2%;font-size:80%;float:right;">Created by: 
-    <a href="http://painblogr.org" target="_blank">painblogR</a> 
-    <img src="./figures/ccby.png" height=18px></a></span>
+    <a href="https://www.painblogr.org" target="_blank">painblogR</a> 
+    <img src="./images/ccby.png" height=18px></a></span>
 </p>
