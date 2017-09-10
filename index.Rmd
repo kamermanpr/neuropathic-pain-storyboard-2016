@@ -7,11 +7,12 @@ output:
       - { title: 'painblogR.org', icon: 'fa-home', href: 'https://www.painblogr.org/', align: right }
     social: ['twitter', 'facebook', 'linkedin', 'google-plus']
     source_code: 'https://github.com/kamermanpr/WHO-EML-storyboard-2016'
-    favicon: 'favicon.ico'
+    favicon: './images/favicon.ico'
     self_contained: false
 ---
 
 ```{r setup, include = FALSE, warning = FALSE, message = FALSE}
+# Load packages
 library(flexdashboard)
 library(dplyr)
 library(tibble)
@@ -24,10 +25,10 @@ library(highcharter)
 library(leaflet)
 library(sp)
 
-knitr::opts_chunk$set(cache = FALSE,
-                      fig.cap = TRUE,
+# Global knitr options
+knitr::opts_chunk$set(warning = FALSE,
+                      message = FALSE,
                       fig.align = 'center')
-
 ```
 
 ### **1. Introduction:** Neuropathic pain is a debilitating form of chronic pain. Learn more about it in this storyboard.<br><span style="font-size:80%;font-style:italic;">(navigate through the storyboard by clicking on the panels in this top row)</span>. {data-commentary-width=400}
@@ -209,8 +210,9 @@ prevalence_plot <- ggplot(data = plot_data[-7, ]) + # Omit 'All combined' data
           axis.text.x = element_text(size = 14, family = 'Arial'))
 
 # Make ggplot interactive with ggiraph htmlwidget
-ggiraph(code = {print(prevalence_plot)}, 
-        width_svg = 8, height_svg = 5,
+ggiraph(code = {print(prevalence_plot)},
+        width_svg = 8,
+        flexdashboard = TRUE,
         tooltip_extra_css = tooltip_css,
         tooltip_opacity = 1,
         hover_css = hover_css)
@@ -429,8 +431,9 @@ burden_plot <- ggplot(data = data_burden) +
           axis.text = element_text(size = 14, family = 'Arial'))
 
 # Make ggplot interactive with ggiraph htmlwidget
-ggiraph(code = {print(burden_plot)}, 
-        width_svg = 8, height_svg = 5,
+ggiraph(code = {print(burden_plot)},
+        width_svg = 8,
+        flexdashboard = TRUE,
         tooltip_extra_css = tooltip_css,
         tooltip_opacity = 1,
         hover_css = hover_css)
@@ -632,7 +635,8 @@ nnt_plot <- ggplot(data = nnt_data) +
 
 # Make ggplot interactive with ggiraph htmlwidget
 ggiraph(code = print(nnt_plot),
-        width_svg = 8, height_svg = 5.5,
+        width_svg = 8,
+        flexdashboard = TRUE,
         tooltip_extra_css = tooltip_css,
         tooltip_opacity = 1,
         hover_css = hover_css)
@@ -705,18 +709,17 @@ leaflet(data = geo_data) %>%
                                     'Third-line drug classes',
                                     'IMF income group'),
                      options = layersControlOptions(collapsed = FALSE)) %>%
-    # Added new class to leafletfix.css - .info-small with smaller font size
     addLegend("topleft", pal = pal_first, values = ~ factor_first,
               title = "No. of 1st-line classes on NEML <br><em>(TCA, &alpha;2&delta;-ligand, SNRI)<sup>&dagger;</sup></em>",
-              className = 'info-small legend-small', opacity = 1) %>%
+              opacity = 1) %>%
     addLegend("bottomleft", pal = pal_third, values = ~ factor_third,
-              title = "No. of 3rd-line classes on NEML <br><em>(strong opioid, other agent)<sup>&#8277;</sup></em>", className = 'info-small legend-small',
+              title = "No. of 3rd-line classes on NEML <br><em>(strong opioid, other agent)<sup>&#8277;</sup></em>", 
               opacity = 1) %>%
     addLegend("bottomleft", pal = pal_second, values = ~ factor_second,
-              title = "No. of 2nd-line classes on NEML <br><em>(weak opioid, topical agent)<sup>&Dagger;</sup></em>",className = 'info-small legend-small',
+              title = "No. of 2nd-line classes on NEML <br><em>(weak opioid, topical agent)<sup>&Dagger;</sup></em>",
               opacity = 1) %>%
     addLegend("bottomright", pal = pal_income, values = ~ imf,
-              title = "IMF income category", className = 'info-small legend-small',
+              title = "IMF income category",
               opacity = 1)
 
 # Clear environment
